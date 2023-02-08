@@ -4,18 +4,14 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hello World</title>
+    <title>Document</title>
   </head>
   <body>
-    <h1>Mascotas</h1>
-    {% with messages = get_flashed_messages() %} {% if messages %} {% for
-    message in messages %}
-    <p>{{ message }}</p>
-    {% endfor %} {% endif %} {% endwith %}
+    Detalle de Mascota
 
     <br />
 
-    {% for pet in pets %} {{ pet.name }}
+    {{ pet.name }}
 
     <br />
 
@@ -35,17 +31,13 @@
 
     <br />
 
-    {{ pet.updated_at if pet.updated_at else 'Sin actualizar' }}
+    {{ pet.updated_at }}
 
     <br />
-
     {{ pet.breed.name }}
 
-    <br /><br />
-    {% endfor %}
-
-    <br />
-
-    <a href="/pet">Registrar Mascota</a>
+    <a href="/">Volver al inicio</a>
+    <button>Modificar</button>
+    <button>Eliminar</button>
   </body>
 </html>
