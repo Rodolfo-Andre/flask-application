@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, flash, request 
+from flask import Blueprint, render_template, flash, request, url_for, redirect
 from app.models.breed import Breed
 from app.models.pet import Pet
 from app.forms.pet_form import PetForm
@@ -27,7 +27,7 @@ def add_pet():
     db.session.commit()
 
     flash("Se ha registrado la mascota con éxito")
-    return render_template('index.html')
+    return redirect(url_for("pet.index"))
 
   return render_template('add_pet.html', form=pet_form)
 
