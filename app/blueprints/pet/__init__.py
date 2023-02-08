@@ -37,6 +37,29 @@ def detail_pet(id):
 
   return render_template("detail_pet.html", pet=pet_object)
 
+@bp.route('/pet/<int:id>/update', methods=['GET', "POST"])
+def update_pet(id):
+  pet_object = Pet.query.get_or_404(id)
+
+  pet_form = PetForm()
+  
+  if request.method == "POST" and pet_form.validate_on_submit():
+    pet_data = pet_form.data
+    pet_data.popitem()
+
+    pet_object.from_dict(**pet_data)
+    db.session.commit()
+    
+    flash("Se actualizaron los datos de la mascota con éxito")
+
+    return redirect(url_for("pet.detail_pet", id=id))
+
+  for field in pet_form:
+    if (field.name != "csrf_token"):
+      field.data = getattr(pet_object, field.name)
+
+  return render_template("update_pet.html", form=pet_form)
+
 
 
 
