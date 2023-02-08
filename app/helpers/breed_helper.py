@@ -6,14 +6,14 @@ class BreedHelper:
     @staticmethod
     def add_dummy_breed_data(breeds):
         for breed in breeds:
-            breed_object = Breed(name=breed["name"])
+            breed_object = Breed(**breed)
             db.session.add(breed_object)
             db.session.commit()
         print("Successfully added")
     
     @staticmethod
     def get_data_json():
-      json_data = open("app/data/breed.json")
+      json_data = open("app/data/breed.json", encoding="UTF-8")
   
       data = json.load(json_data)
 
