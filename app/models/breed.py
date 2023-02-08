@@ -5,4 +5,4 @@ class Breed(db.Model):
   
   id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String(20), nullable=False)
-  pets = db.relationship('Pet', backref='breed', lazy='True')
+  pets = db.relationship('Pet', backref='breed', lazy='dynamic')
