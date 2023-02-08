@@ -4,14 +4,20 @@ from app.models.pet import Pet
 from app.forms.pet_form import PetForm
 from sqlalchemy import asc
 from app import db
+import datetime
 
 bp = Blueprint('pet', __name__, template_folder='templates')
 
 @bp.route('/')
 def index():
+  owner_dni = request.args.get("owner_dni")
   pets = Pet.query.order_by(Pet.birth_date.desc(), Pet.name.desc(), Pet.owner_name.desc()).all()
+  owners = [ { "owner_dni": pet.owner_dni, "owner_name": pet.owner_name } for pet in pets ]
 
-  return render_template('index.html', pets=pets)  
+  if owner_dni :
+    pets = Pet.query.filter(Pet.owner_dni == owner_dni)
+  
+  return render_template('index.html', pets=pets, owners=owners, selected_owner=owner_dni)  
 
 @bp.route('/pet', methods=['GET', 'POST'])
 def add_pet():
@@ -48,6 +54,7 @@ def update_pet(id):
     pet_data.popitem()
 
     pet_object.from_dict(**pet_data)
+    pet_object.updated_at = datetime.datetime.now()
     db.session.commit()
     
     flash("Se actualizaron los datos de la mascota con éxito")

@@ -8,6 +8,20 @@
   </head>
   <body>
     <h1>Mascotas</h1>
+
+    <form method="GET">
+      <select name="owner_dni">
+        <option value="">-- Todos ---</option>
+        {% for owner in owners %}
+        <option value="{{ owner.owner_dni }}" {% if owner.owner_dni == selected_owner %} selected {% endif %}>
+          {{ owner.owner_name }}
+        </option>
+        {% endfor %}
+      </select>
+
+      <input type="submit" value="Buscar" />
+    </form>
+
     {% with messages = get_flashed_messages() %} {% if messages %} {% for
     message in messages %}
     <p>{{ message }}</p>
