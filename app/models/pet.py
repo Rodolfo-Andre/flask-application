@@ -26,8 +26,9 @@ class Pet(db.Model):
     }
 
   def from_dict(self, **args):
-    self.name = args["name"],
+    self.name = args["name"]
     self.owner_dni = args["owner_dni"]
     self.owner_name = args["owner_name"]
     self.birth_date = args["birth_date"]
-    self.breed = args["breed"]
+    self.breed = args.get("breed") or self.breed
+    self.breed_id = args.get("breed_id") or self.breed_id

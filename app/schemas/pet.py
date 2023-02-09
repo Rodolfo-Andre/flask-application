@@ -22,4 +22,5 @@ class PetQueryArgsShema(marshmallow.Schema):
 
 pet_schema = PetSchema()
 pets_schema = PetSchema(many=True)
+pet_update_schema = PetSchema(load_instance=False)
 pet_query_schema = PetQueryArgsShema()
