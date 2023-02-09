@@ -1,65 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hello World</title>
-  </head>
-  <body>
-    <h1>Mascotas</h1>
+{% extends "base.html" %} {% block content %}
+<h1 class="text-center">Listado de Mascotas</h1>
 
-    <form method="GET">
-      <select name="owner_dni">
-        <option value="">-- Todos ---</option>
-        {% for owner in owners %}
-        <option value="{{ owner.owner_dni }}" {% if owner.owner_dni == selected_owner %} selected {% endif %}>
-          {{ owner.owner_name }}
-        </option>
+<form method="GET" class="m-auto p-3 d-flex justify-content-end flex-wrap gap-3" style="max-width: 600px;">
+  <div class="d-flex flex-column" style="flex-grow: 2;">
+    <label for="owner_dni">Seleccionar cliente: </label>
+    <select id="owner_dni" class="form-control" name="owner_dni">
+      <option value="">-- Todos ---</option>
+      {% for owner in owners %}
+      <option value="{{ owner.owner_dni }}" {% if owner.owner_dni == selected_owner %} selected {% endif %}>{{ owner.owner_name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <input class="btn btn-primary align-self-end" style="flex-grow: 1;" type="submit" value="Filtrar" />
+
+  <a class="btn btn-success align-self-end" style="flex-grow: 1;" href="/pet">Registrar Mascota</a>
+</form>
+
+{% with messages = get_flashed_messages() %} {% if messages %} {% for message in
+messages %}
+<div class="alert alert-success w-100" role="alert">{{ message }}</div>
+{% endfor %} {% endif %} {% endwith %}
+
+<main>
+  <div class="p-3">
+    <table class="table text-center m-auto" style="max-width: 1000px;">
+      <caption>Lisa de Mascotas</caption>
+      <thead class="align-middle">
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Fecha de nacimiento</th>
+          <th scope="col">Raza</th>
+          <th scope="col">Nombre del propietario</th>
+          <th scope="col">Dni del propietario</th>
+          <th scope="col">Creado hace</th>
+          <th scope="col">Actualizado hace</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider align-middle">
+        {% for pet in pets %}
+          <tr>
+            <td data-label="Nombre">{{ pet.name }}</td>
+            <td data-label="Fecha de nacimiento">{{ pet.birth_date }}</td>
+            <td data-label="Raza">{{ pet.breed.name }}</td>
+            <td data-label="Nombre del propietario">{{ pet.owner_name }}</td>
+            <td data-label="Dni del propietario">{{ pet.owner_dni }}</td>
+            <td data-label="Creado hace">{{ pet.created_at }}</td>
+            <td data-label="Actualizado hace">{{ pet.updated_at if pet.updated_at else "Sin Actualizar" }}</td>
+            <td data-label="Acciones">
+              <div class="d-flex flex-wrap gap-1">
+                <a style="flex-grow: 1;" class="btn btn-primary" href="{{ url_for('pet.detail_pet', id=pet.id) }}" >Más detalles</a>
+                <a style="flex-grow: 1;" class="btn btn-warning" href="{{ url_for('pet.update_pet', id=pet.id) }}" >Editar</a>
+                <a style="flex-grow: 1;" class="btn btn-danger" href="">Eliminar</a>
+              </div>
+            </td>
+          </tr>
         {% endfor %}
-      </select>
-
-      <input type="submit" value="Buscar" />
-    </form>
-
-    {% with messages = get_flashed_messages() %} {% if messages %} {% for
-    message in messages %}
-    <p>{{ message }}</p>
-    {% endfor %} {% endif %} {% endwith %}
-
-    <br />
-
-    {% for pet in pets %} {{ pet.name }}
-
-    <br />
-
-    {{ pet.owner_dni }}
-
-    <br />
-
-    {{ pet.owner_name }}
-
-    <br />
-
-    {{ pet.birth_date }}
-
-    <br />
-
-    {{ pet.created_at }}
-
-    <br />
-
-    {{ pet.updated_at if pet.updated_at else 'Sin actualizar' }}
-
-    <br />
-
-    {{ pet.breed.name }}
-
-    <br /><br />
-    {% endfor %}
-
-    <br />
-
-    <a href="/pet">Registrar Mascota</a>
-  </body>
-</html>
+      </tbody>
+    </table>
+  </div>
+  
+</main>
+{% endblock %}

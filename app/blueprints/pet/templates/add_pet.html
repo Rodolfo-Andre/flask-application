@@ -1,51 +1,63 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <h1>Registrar Mascota</h1>
+{% extends "base.html" %} {% block content %}
+<h1 class="text-center">Registrar Mascota</h1>
 
-    <form method="POST">
-      {{ form.csrf_token }}
-
-      <br />
-
-      {% if form.name.errors %}
-      <ul class="errors">
-        {% for error in form.name.errors %}
-        <li>{{ error }}</li>
-        {% endfor %}
-      </ul>
-
+<main>
+  <div class="m-auto p-3" style="max-width: 800px">
+    <form method="POST" class="mb-3 d-flex gap-3 flex-wrap">
+      {{ form.csrf_token }} {% if form.errors %}
+      <div class="text-danger">
+        Errores:
+        <ul>
+          {% for field in form.errors %} {% for error in form.errors[field] %}
+          <li>{{ error }}</li>
+          {% endfor %} {% endfor %}
+        </ul>
+      </div>
       {% endif %}
 
-      <br />
+      <div class="d-flex flex-wrap gap-3 w-100" style="flex-grow: 1">
+        <div style="flex-grow: 1">
+          <label for="name">{{ form.name.label }} </label>
+          {{ form.name(placeholder="Introduce el nombre", class_="form-control")
+          }}
+        </div>
 
-      {{ form.name.label }} {{ form.name }}
+        <div style="flex-grow: 1">
+          <label for="birth_date">{{ form.birth_date.label }} </label>
+          {{ form.birth_date(placeholder="Introduce la fecha de nacimiento",
+          class_="form-control") }}
+        </div>
+      </div>
 
-      <br />
+      <div style="flex-grow: 1">
+        <label for="owner_name">{{ form.owner_name.label }} </label>
+        {{ form.owner_name(placeholder="Introduce el nombre del propietario",
+        class_="form-control") }}
+      </div>
 
-      {{ form.birth_date.label }} {{ form.birth_date }}
+      <div style="flex-grow: 1">
+        <label for="owner_dni">{{ form.owner_dni.label }} </label>
+        {{ form.owner_dni(placeholder="Introduce el dni del propietario",
+        class_="form-control") }}
+      </div>
 
-      <br />
+      <div class="w-100" style="flex-grow: 1">
+        <label for="breed">{{ form.breed.label }} </label>
+        {{ form.breed(class_="form-control") }}
+      </div>
 
-      {{ form.owner_name.label }} {{ form.owner_name }}
-
-      <br />
-
-      {{ form.owner_dni.label }} {{ form.owner_dni }}
-
-      <br />
-      {{ form.breed.label }} {{ form.breed }}
-
-      <br />
-      <input type="submit" value="Registrar" />
+      <div class="w-100 text-center">
+        <input
+          class="btn btn-primary align-self-start w-100"
+          style="max-width: 250px"
+          type="submit"
+          value="Registrar"
+        />
+      </div>
     </form>
 
-    <a href="/">Volver al inicio</a>
-  </body>
-</html>
+    <a href="/">⏪ Volver al inicio</a>
+  </div>
+</main>
+
+{% endblock %}

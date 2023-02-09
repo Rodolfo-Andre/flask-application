@@ -1,47 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <h1>Detalle de Mascota</h1>
-    {% with messages = get_flashed_messages() %} {% if messages %} {% for
-    message in messages %}
-    <p>{{ message }}</p>
-    {% endfor %} {% endif %} {% endwith %}
+{% extends "base.html" %} {% block content %}
+<h1 class="text-center">Detalle de Mascota</h1>
 
-    <br />
+<main>
+  <div class="m-auto p-3" style="max-width: 600px">
+    <div class="d-flex flex-wrap justify-content-center gap-3 mb-2">
+      <h3 class="m-0 align-self-end">Nombre:</h3>
+      <div class="border-bottom border-1 text-center" style="flex-grow: 1">
+        <span class="fs-4">{{ pet.name }}</span>
+      </div>
+    </div>
 
-    {{ pet.name }}
+    <div class="d-flex flex-wrap justify-content-center gap-3 mb-2">
+      <h3 class="m-0 align-self-end">Fecha de nacimiento:</h3>
+      <div class="border-bottom border-1 text-center" style="flex-grow: 1">
+        <span class="fs-4">{{ pet.birth_date }}</span>
+      </div>
+    </div>
 
-    <br />
+    <div class="d-flex flex-wrap justify-content-center gap-3 mb-2">
+      <h3 class="m-0 align-self-end">Raza:</h3>
+      <div class="border-bottom border-1 text-center" style="flex-grow: 1">
+        <span class="fs-4"> {{ pet.breed.name }} </span>
+      </div>
+    </div>
 
-    {{ pet.owner_dni }}
+    <div class="d-flex flex-wrap justify-content-center gap-3 mb-2">
+      <h3 class="m-0 align-self-end text-center">Nombre del propietario:</h3>
+      <div class="border-bottom border-1 text-center" style="flex-grow: 1">
+        <span class="fs-4"> {{ pet.owner_name }} </span>
+      </div>
+    </div>
 
-    <br />
+    <div class="d-flex flex-wrap justify-content-center gap-3 mb-2">
+      <h3 class="m-0 align-self-end">Dni del propietario:</h3>
+      <div class="border-bottom border-1 text-center" style="flex-grow: 1">
+        <span class="fs-4"> {{ pet.owner_dni }} </span>
+      </div>
+    </div>
 
-    {{ pet.owner_name }}
+    <div class="d-flex flex-wrap justify-content-center gap-3 mb-2">
+      <h3 class="m-0 align-self-end">Creado hace:</h3>
+      <div class="border-bottom border-1 text-center" style="flex-grow: 1">
+        <span class="fs-4"> {{ pet.created_at }} </span>
+      </div>
+    </div>
 
-    <br />
+    <div class="d-flex flex-wrap justify-content-center gap-3 mb-2">
+      <h3 class="m-0 align-self-end">Actualizado hace:</h3>
+      <div class="border-bottom border-1 text-center" style="flex-grow: 1">
+        <span class="fs-4">
+          {{ pet.updated_at if pet.updated_at else 'Sin actualizar' }}
+        </span>
+      </div>
+    </div>
 
-    {{ pet.birth_date }}
+    <div
+      class="d-flex flex-wrap gap-3 my-3 mx-auto px-3"
+      style="max-width: 500px"
+    >
+      <a
+        style="flex-grow: 1"
+        class="btn btn-warning"
+        href="{{ url_for('pet.update_pet', id=pet.id) }}"
+        >Editar</a
+      >
+      <a style="flex-grow: 1" class="btn btn-danger" href="">Eliminar</a>
+    </div>
 
-    <br />
-
-    {{ pet.created_at }}
-
-    <br />
-
-    {{ pet.updated_at if pet.updated_at else 'Sin actualizar' }}
-
-    <br />
-    {{ pet.breed.name }}
-
-    <a href="/">Volver al inicio</a>
-    <button>Modificar</button>
-    <button>Eliminar</button>
-  </body>
-</html>
+    <a href="/">⏪ Volver al inicio</a>
+  </div>
+</main>
+{% endblock %}

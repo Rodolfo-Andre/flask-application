@@ -1,8 +1,6 @@
 from flask import Blueprint, render_template, flash, request, url_for, redirect
-from app.models.breed import Breed
 from app.models.pet import Pet
 from app.forms.pet_form import PetForm
-from sqlalchemy import asc
 from app import db
 import datetime
 
@@ -58,8 +56,6 @@ def update_pet(id):
     db.session.commit()
     
     flash("Se actualizaron los datos de la mascota con éxito")
-
-    return redirect(url_for("pet.detail_pet", id=id))
 
   for field in pet_form:
     if (field.name != "csrf_token"):
