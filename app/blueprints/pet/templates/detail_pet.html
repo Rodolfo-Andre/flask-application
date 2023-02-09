@@ -64,10 +64,14 @@
         href="{{ url_for('pet.update_pet', id=pet.id) }}"
         >Editar</a
       >
-      <a style="flex-grow: 1" class="btn btn-danger" href="">Eliminar</a>
+      <a style="flex-grow: 1" class="btn btn-danger" data-delete-id="{{pet.id}}"
+        >Eliminar</a
+      >
     </div>
 
     <a href="/">⏪ Volver al inicio</a>
   </div>
 </main>
+{% endblock %} {% block scripts %}
+<script src="../../../static/detail_or_updated_pet.js"></script>
 {% endblock %}

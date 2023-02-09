@@ -62,6 +62,7 @@
         <a
           class="btn btn-danger align-self-start"
           style="max-width: 250px; flex-grow: 1"
+          data-delete-id="{{id}}"
         >
           Eliminar
         </a>
@@ -71,5 +72,6 @@
     <a href="/">⏪ Volver al inicio</a>
   </div>
 </main>
-
+{% endblock %} {% block scripts %}
+<script src="../../../static/detail_or_updated_pet.js"></script>
 {% endblock %}

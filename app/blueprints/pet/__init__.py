@@ -61,7 +61,19 @@ def update_pet(id):
     if (field.name != "csrf_token"):
       field.data = getattr(pet_object, field.name)
 
-  return render_template("update_pet.html", form=pet_form)
+  return render_template("update_pet.html", form=pet_form, id=id)
+
+@bp.route('/pet/<int:id>/delete', methods=['GET'])
+def delete_pet(id):
+  pet_object = Pet.query.get_or_404(id)
+
+  db.session.delete(pet_object)
+  db.session.commit()
+
+  flash("Se ha eliminado a la mascota con éxito")
+
+  return redirect(url_for("pet.index"))
+
 
 
 

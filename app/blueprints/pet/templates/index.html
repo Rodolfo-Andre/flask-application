@@ -39,27 +39,38 @@ messages %}
         </tr>
       </thead>
       <tbody class="table-group-divider align-middle">
-        {% for pet in pets %}
+        {% if not pets %}
           <tr>
-            <td data-label="Nombre">{{ pet.name }}</td>
-            <td data-label="Fecha de nacimiento">{{ pet.birth_date }}</td>
-            <td data-label="Raza">{{ pet.breed.name }}</td>
-            <td data-label="Nombre del propietario">{{ pet.owner_name }}</td>
-            <td data-label="Dni del propietario">{{ pet.owner_dni }}</td>
-            <td data-label="Creado hace">{{ pet.created_at }}</td>
-            <td data-label="Actualizado hace">{{ pet.updated_at if pet.updated_at else "Sin Actualizar" }}</td>
-            <td data-label="Acciones">
-              <div class="d-flex flex-wrap gap-1">
-                <a style="flex-grow: 1;" class="btn btn-primary" href="{{ url_for('pet.detail_pet', id=pet.id) }}" >Más detalles</a>
-                <a style="flex-grow: 1;" class="btn btn-warning" href="{{ url_for('pet.update_pet', id=pet.id) }}" >Editar</a>
-                <a style="flex-grow: 1;" class="btn btn-danger" href="">Eliminar</a>
-              </div>
-            </td>
+            <td class="no-data" colspan="8">No hay datos</td>
           </tr>
-        {% endfor %}
+        {% else %}
+          {% for pet in pets %}
+            <tr id="pet-{{ pet.id }}">
+              <td data-label="Nombre">{{ pet.name }}</td>
+              <td data-label="Fecha de nacimiento">{{ pet.birth_date }}</td>
+              <td data-label="Raza">{{ pet.breed.name }}</td>
+              <td data-label="Nombre del propietario">{{ pet.owner_name }}</td>
+              <td data-label="Dni del propietario">{{ pet.owner_dni }}</td>
+              <td data-label="Creado hace">{{ pet.created_at }}</td>
+              <td data-label="Actualizado hace">{{ pet.updated_at if pet.updated_at else "Sin Actualizar" }}</td>
+              <td data-label="Acciones">
+                <div class="d-flex flex-wrap gap-1">
+                  <a style="flex-grow: 1;" class="btn btn-primary" href="{{ url_for('pet.detail_pet', id=pet.id) }}" >Más detalles</a>
+                  <a style="flex-grow: 1;" class="btn btn-warning" href="{{ url_for('pet.update_pet', id=pet.id) }}" >Editar</a>
+                  <a style="flex-grow: 1;" class="btn btn-danger" data-delete-id="{{pet.id}}">Eliminar</a>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        {% endif %}
       </tbody>
     </table>
   </div>
   
 </main>
 {% endblock %}
+
+{% block scripts %}
+<script src="../../../static/index.js"></script>
+{% endblock %}
+

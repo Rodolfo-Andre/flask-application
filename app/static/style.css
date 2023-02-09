@@ -3,6 +3,10 @@ TABLA RESPONSIVA
 REFERENCIA: https://codepen.io/AllThingsSmitty/pen/MyqmdM
 */
 @media screen and (max-width: 750px) {
+  .no-data {
+    text-align: center;
+  }
+
   tbody {
     border-top: none !important;
   }

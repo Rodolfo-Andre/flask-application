@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from app.models.breed import Breed
-from wtforms import StringField, DateField, SelectField
+from wtforms import StringField, DateField
 from wtforms.validators import DataRequired, Length
 from wtforms_sqlalchemy.fields import QuerySelectField
 
