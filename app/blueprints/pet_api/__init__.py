@@ -2,6 +2,7 @@ from flask_smorest import Blueprint
 from flask.views import MethodView
 from flask import jsonify
 from app.models.pet import Pet
+from app.models.breed import Breed
 from app.schemas.pet import pets_schema, pet_query_schema, pet_schema, pet_update_schema
 from app import db
 import datetime
