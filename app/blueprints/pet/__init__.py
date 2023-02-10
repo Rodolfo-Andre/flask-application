@@ -4,6 +4,7 @@ from app.models.breed import Breed
 from app.forms.pet_form import PetForm
 from app import db
 import datetime
+import timeago
 
 bp = Blueprint('pet', __name__, template_folder='templates')
 
@@ -45,7 +46,7 @@ def add_pet():
 def detail_pet(id):
   pet_object = Pet.query.get_or_404(id)
 
-  return render_template("detail_pet.html", pet=pet_object)
+  return render_template("detail_pet.html", pet=pet_object, timeago=timeago)
 
 @bp.route('/pet/<int:id>/update', methods=['GET', "POST"])
 def update_pet(id):
@@ -85,7 +86,7 @@ def add_breed():
   name = request.form["name"]
   url_origin = request.headers.__getitem__("Referer")
 
-  if name.__len__() > 20 or name.strip() == "" :
+  if name.__len__() > 20 or name.strip() == "" or Breed.query.filter_by(name=name).all():
     flash("Ocurrió un error al agregar la raza. Vuelve a intentarlo", "error")
     return redirect(url_origin)
 
@@ -98,7 +99,3 @@ def add_breed():
   db.session.commit()
 
   return redirect(url_origin)
-  
-
-
-

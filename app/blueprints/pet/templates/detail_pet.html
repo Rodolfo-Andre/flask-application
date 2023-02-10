@@ -41,7 +41,9 @@
     <div class="d-flex flex-wrap justify-content-center gap-3 mb-2">
       <h3 class="m-0 align-self-end">Creado hace:</h3>
       <div class="border-bottom border-1 text-center" style="flex-grow: 1">
-        <span class="fs-4"> {{ pet.created_at }} </span>
+        <span class="fs-4">
+          {{ timeago.format(date=pet.created_at, locale="es").capitalize() }}
+        </span>
       </div>
     </div>
 
@@ -49,7 +51,8 @@
       <h3 class="m-0 align-self-end">Actualizado hace:</h3>
       <div class="border-bottom border-1 text-center" style="flex-grow: 1">
         <span class="fs-4">
-          {{ pet.updated_at if pet.updated_at else 'Sin actualizar' }}
+          {{timeago.format(date=pet.updated_at, locale="es").capitalize() if
+          pet.updated_at else 'Sin actualizar' }}
         </span>
       </div>
     </div>

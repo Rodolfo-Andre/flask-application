@@ -1,3 +1,4 @@
+from flask import jsonify
 from flask_smorest import Blueprint
 from flask.views import MethodView
 from app.models.breed import Breed
@@ -24,8 +25,13 @@ class Breeds(MethodView):
   @bp.response(201, breed_schema)
   def post(self, new_data):
     """Agregar raza"""
+    name = new_data.name
+
+    if Breed.query.filter_by(name=name).all():
+        return jsonify({ "message": "La raza ya está registrada"}), 422 
+
     breed = Breed()
-    breed.name = new_data.name
+    breed.name = name
 
     db.session.add(breed)
     db.session.commit()

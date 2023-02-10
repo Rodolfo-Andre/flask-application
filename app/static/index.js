@@ -21,9 +21,7 @@ $d.addEventListener("DOMContentLoaded", () => {
       $trPet.childNodes.forEach((child) => {
         if (
           child.nodeType === 1 &&
-          !["Acciones", "Creado hace", "Actualizado hace"].includes(
-            child.dataset.label
-          )
+          !["Acciones"].includes(child.dataset.label)
         ) {
           data.push({ title: child.dataset.label, value: child.textContent });
         }

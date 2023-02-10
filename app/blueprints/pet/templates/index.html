@@ -32,7 +32,7 @@
         {{ message }}
       </div>
       {% endfor %} {% endif %} {% endwith %}
-    <table class="table text-center m-auto" style="max-width: 1000px;">
+    <table class="table text-center m-auto" style="max-width: 1200px;">
       <caption>Lisa de Mascotas</caption>
       <thead class="align-middle">
         <tr>
@@ -41,8 +41,6 @@
           <th scope="col">Raza</th>
           <th scope="col">Nombre del propietario</th>
           <th scope="col">Dni del propietario</th>
-          <th scope="col">Creado hace</th>
-          <th scope="col">Actualizado hace</th>
           <th scope="col">Acciones</th>
         </tr>
       </thead>
@@ -59,8 +57,6 @@
               <td data-label="Raza">{{ pet.breed.name }}</td>
               <td data-label="Nombre del propietario">{{ pet.owner_name }}</td>
               <td data-label="Dni del propietario">{{ pet.owner_dni }}</td>
-              <td data-label="Creado hace">{{ pet.created_at }}</td>
-              <td data-label="Actualizado hace">{{ pet.updated_at if pet.updated_at else "Sin Actualizar" }}</td>
               <td data-label="Acciones">
                 <div class="d-flex flex-wrap gap-1">
                   <a style="flex-grow: 1;" class="btn btn-primary" href="{{ url_for('pet.detail_pet', id=pet.id) }}" >Más detalles</a>
@@ -76,7 +72,7 @@
     
     {% if pets.items %}
       <nav>
-        <ul class="pagination justify-content-center">
+        <ul class="pagination pagination-sm flex-wrap justify-content-center m-0">
           {% if pets.has_prev %}
               <li class="page-item">
                 <a class="page-link" href="{{ url_for('pet.index', page=pets.prev_num, owner_dni=selected_owner) }}">Retroceder</a>
@@ -88,14 +84,16 @@
           {% endif %}
 
           {% for number in pets.iter_pages() %}
-              {% if pets.page != number %}
-                  <li class="page-item">
-                    <a class="page-link"  href="{{ url_for('pet.index', page=number) }}">{{ number }}</a>
-                  </li>
-              {% else %}
-                  <li class="page-item active" aria-current="page">
-                    <a class="page-link">{{ number }}</a>
-                  </li>
+              {% if number %}
+                {% if pets.page != number %}
+                    <li class="page-item">
+                      <a class="page-link"  href="{{ url_for('pet.index', page=number) }}">{{ number }}</a>
+                    </li>
+                {% else %}
+                    <li class="page-item active" aria-current="page">
+                      <a class="page-link">{{ number }}</a>
+                    </li>
+                {% endif %}
               {% endif %}
           {% endfor %}
 
