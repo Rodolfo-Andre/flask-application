@@ -29,9 +29,11 @@ def create_app():
     with app.app_context():  
       from app.blueprints.pet import bp
       from app.blueprints.pet_api import bp as pet_api_bp
+      from app.blueprints.breed_api import bp as breed_api_bp
 
       app.register_blueprint(bp)
-      smorest_api.register_blueprint(pet_api_bp, url_prefix="/pet-api")  
+      smorest_api.register_blueprint(pet_api_bp, url_prefix="/pet-api", name="Api de Mascotas")  
+      smorest_api.register_blueprint(breed_api_bp, url_prefix="/breed-api", name="Api de Razas")
     return app
 
 @app.errorhandler(404)
