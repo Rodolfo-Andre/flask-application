@@ -12,23 +12,31 @@ class PetMessageCode ():
 
 bp = Blueprint("pet_api", __name__)
 
+PER_PAGE_DEFAULT = 5
+
 @bp.route("/")
 class Pets(MethodView):
     @bp.arguments(pet_query_schema, location="query")
     @bp.response(200, pets_schema)
-    def get(self, query):
+    @bp.paginate(page_size=PER_PAGE_DEFAULT)
+    def get(self, query, pagination_parameters):
         """Listar mascota"""
-        pets = Pet.query.order_by(Pet.birth_date.desc(), Pet.name.desc(), Pet.owner_name.desc()).all()
-  
+        pets = Pet.query.order_by(Pet.birth_date.desc(), Pet.name.desc(), Pet.owner_name.desc())
+
+        pagination_parameters.item_count = pets.count()
+
         if "owner_dni" in query.keys():
           pets = Pet.query.filter(Pet.owner_dni == query["owner_dni"])
-        
-        return pets
+    
+        return pets.paginate(page=pagination_parameters.page, per_page=pagination_parameters.page_size, error_out=True).items
     
     @bp.arguments(pet_schema)
     @bp.response(201, pet_schema)
     def post(self, new_data):
         """Agregar mascota"""
+        if Breed.query.get(new_data.breed_id) is None:
+           return jsonify({ "message": "Raza inválida"}), 422 
+
         db.session.add(new_data)
         db.session.commit()
 
@@ -50,6 +58,9 @@ class PetsById(MethodView):
     @bp.response(200, pet_schema)
     def put(self, data, id):
       """Actualizar mascota por id"""
+      if Breed.query.get(data["breed_id"]) is None:
+           return jsonify({ "message": "Raza inválida"}), 422 
+      
       pet = Pet.query.get(id)
 
       if pet is None:
