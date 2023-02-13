@@ -5,9 +5,9 @@ from app.models.breed import Breed
 app = create_app()
 
 with app.app_context(): 
- if Breed.query.count() == 0:
+  if Breed.query.count() == 0:
     BreedHelper.add_dummy_breed_data(BreedHelper.get_data_json())
 
 if __name__ == '__main__':
-    app.debug = True
-    app.run()
+  app.debug = True
+  app.run()

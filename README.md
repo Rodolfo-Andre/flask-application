@@ -24,7 +24,7 @@ pip install -r requirements.txt
 
 ```python
 SECRET_KEY=my_secret_key
-SQLALCHEMY_DATABASE_URI=mysql://root:root@localhost/app
+MYSQL_URL=mysql://root:root@localhost/app
 SQLALCHEMY_TRACK_MODIFICATIONS=False
 API_TITLE=Pet API
 API_VERSION=v 0.0.1
